@@ -18,7 +18,7 @@ class TaskAdapter(
     private val context: Context,
     private var taskList: OrderedRealmCollection<Task>?,
     private var listener: OnItemClickListener,
-    private var checkBoxListener: OnCheckedChangeListener,
+    private var checkBoxListener: OnCheckboxChangeListener,
     private val autoUpdate: Boolean
 ) : RealmRecyclerViewAdapter<Task, TaskAdapter.TaskViewHolder>(taskList, autoUpdate) {
 
@@ -27,7 +27,7 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         val task: Task = taskList?.get(position) ?: return
 
-        holder.titleTextView.text = task.content
+        holder.titleTextView.text = task.title
         holder.dateTextView.text =
             SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(task.createdAt)
 
@@ -58,7 +58,7 @@ class TaskAdapter(
         fun onItemClick(item: Task)
     }
 
-    interface OnCheckedChangeListener {
+    interface OnCheckboxChangeListener {
         fun changeState(task: Task, state: Boolean)
     }
 

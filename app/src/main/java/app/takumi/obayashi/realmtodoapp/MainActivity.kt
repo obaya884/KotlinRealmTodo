@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     startActivity(detail)
                 }
             },
-            object : TaskAdapter.OnCheckedChangeListener {
+            object : TaskAdapter.OnCheckboxChangeListener {
                 override fun changeState(task: Task, state: Boolean) {
                     realm.executeTransaction {
                         task.state = state
@@ -47,10 +47,16 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
+        // FloatActionButtonの動作
         addFloatingActionButton.setOnClickListener {
             val create = Intent(this, CreateActivity::class.java)
-            startActivity(create)
+            startActivityForResult(create, 0)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close()
     }
 
     // メニュー表示の為の関数
@@ -61,12 +67,6 @@ class MainActivity : AppCompatActivity() {
         // メニューのリソース選択
         inflater.inflate(R.menu.main_menu, menu)
         return true
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        realm.close()
     }
 
     fun readAll(): RealmResults<Task> {

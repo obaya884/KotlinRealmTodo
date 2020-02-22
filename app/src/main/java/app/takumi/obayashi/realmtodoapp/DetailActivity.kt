@@ -1,5 +1,6 @@
 package app.takumi.obayashi.realmtodoapp
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -23,10 +24,23 @@ class DetailActivity : AppCompatActivity() {
         // intentの情報取得
         taskId = intent.getStringExtra("taskId")
 
-        var task = realm.where<Task>().equalTo("id", taskId).findFirst()!!
+        val task = realm.where<Task>().equalTo("id", taskId).findFirst()!!
 
         titleText.text = task.title
         contentText.text = task.content
+
+        editFloatingActionButton.setOnClickListener {
+            val create = Intent(this, CreateActivity::class.java)
+            create.putExtra("taskId", taskId)
+            startActivityForResult(create, 1)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            finish()
+        }
     }
 
     // メニュー表示の為の関数
@@ -39,6 +53,7 @@ class DetailActivity : AppCompatActivity() {
         return true
     }
 
+    // メニューアイテム選択時の動作
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.detail_menu_delete -> {
