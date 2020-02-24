@@ -2,7 +2,6 @@ package app.takumi.obayashi.realmtodoapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +18,7 @@ class MainActivity : AppCompatActivity() {
         Realm.getDefaultInstance()
     }
 
-    var taskList: RealmResults<Task>? = null
+    private var taskList: RealmResults<Task>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,21 +73,21 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun readAllTasks(): RealmResults<Task> {
+    private fun readAllTasks(): RealmResults<Task> {
         return realm.where<Task>().findAll().sort("createdAt", Sort.ASCENDING)
     }
 
-    fun readActiveTasks(): RealmResults<Task> {
+    private fun readActiveTasks(): RealmResults<Task> {
         return realm.where<Task>().equalTo("state", false).findAll()
             .sort("createdAt", Sort.ASCENDING)
     }
 
-    fun readArchivedTasks(): RealmResults<Task> {
+    private fun readArchivedTasks(): RealmResults<Task> {
         return realm.where<Task>().equalTo("state", true).findAll()
             .sort("createdAt", Sort.ASCENDING)
     }
 
-    fun setUpRecyclerView() {
+    private fun setUpRecyclerView() {
         val adapter = TaskAdapter(
             this,
             taskList,
@@ -105,7 +104,6 @@ class MainActivity : AppCompatActivity() {
                         if (task.state != state) {
                             task.state = state
                         }
-                        Log.d("state", "${task.state}")
                     }
                 }
             },

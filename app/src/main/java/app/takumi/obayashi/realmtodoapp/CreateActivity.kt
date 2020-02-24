@@ -1,7 +1,6 @@
 package app.takumi.obayashi.realmtodoapp
 
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -24,7 +23,6 @@ class CreateActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val callingActivity = callingActivity?.className
-        Log.d("TAG", callingActivity)
 
         if (callingActivity == "app.takumi.obayashi.realmtodoapp.DetailActivity") {
             val taskId = intent.getStringExtra("taskId")
@@ -73,7 +71,7 @@ class CreateActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun createTask(title: String, content: String) {
+    private fun createTask(title: String, content: String) {
         realm.executeTransaction {
             val task = it.createObject(Task::class.java, UUID.randomUUID().toString())
             task.title = title
@@ -81,7 +79,7 @@ class CreateActivity : AppCompatActivity() {
         }
     }
 
-    fun updateTask(id: String, title: String, content: String) {
+    private fun updateTask(id: String, title: String, content: String) {
         realm.executeTransaction {
             val task = realm.where(Task::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction

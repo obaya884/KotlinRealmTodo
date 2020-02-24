@@ -80,7 +80,7 @@ class DetailActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    fun delete(id: String) {
+    private fun delete(id: String) {
         realm.executeTransaction {
             val task = realm.where(Task::class.java).equalTo("id", id).findFirst()
                 ?: return@executeTransaction
