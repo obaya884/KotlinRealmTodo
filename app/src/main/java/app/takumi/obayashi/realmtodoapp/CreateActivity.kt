@@ -2,6 +2,8 @@ package app.takumi.obayashi.realmtodoapp
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -18,6 +20,9 @@ class CreateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create)
 
+        // 戻るボタンつける
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         val callingActivity = callingActivity?.className
         Log.d("TAG", callingActivity)
 
@@ -30,18 +35,42 @@ class CreateActivity : AppCompatActivity() {
         }
 
         updateFloatingActionButton.setOnClickListener {
-            if (callingActivity == "app.takumi.obayashi.realmtodoapp.MainActivity") {
-                createTask(
-                    titleEditText.text.toString(),
-                    contentEditText.text.toString()
-                )
-                finish()
-            } else if (callingActivity == "app.takumi.obayashi.realmtodoapp.DetailActivity") {
-                val taskId = intent.getStringExtra("taskId")
-                updateTask(taskId, titleEditText.text.toString(), contentEditText.text.toString())
-                finish()
+            if (titleEditText.text.isEmpty()) {
+                AlertDialog.Builder(this)
+                    .setTitle("Lack of Information")
+                    .setMessage("please input title")
+                    .setPositiveButton("OK", { dialog, which ->
+                    })
+                    .show()
+            } else {
+                if (callingActivity == "app.takumi.obayashi.realmtodoapp.MainActivity") {
+                    createTask(
+                        titleEditText.text.toString(),
+                        contentEditText.text.toString()
+                    )
+                    finish()
+                } else if (callingActivity == "app.takumi.obayashi.realmtodoapp.DetailActivity") {
+                    val taskId = intent.getStringExtra("taskId")
+                    updateTask(
+                        taskId,
+                        titleEditText.text.toString(),
+                        contentEditText.text.toString()
+                    )
+                    finish()
+                }
             }
         }
+    }
+
+    // メニューアイテム選択時の動作
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     fun createTask(title: String, content: String) {

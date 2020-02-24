@@ -30,7 +30,6 @@ class TaskAdapter(
         holder.titleTextView.text = task.title
         holder.dateTextView.text =
             SimpleDateFormat("yyyy/MM/dd", Locale.JAPANESE).format(task.createdAt)
-
         holder.checkBox.isChecked = task.state
 
         holder.container.setOnClickListener {

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -34,6 +35,9 @@ class DetailActivity : AppCompatActivity() {
             create.putExtra("taskId", taskId)
             startActivityForResult(create, 1)
         }
+
+        // 戻るボタンつける
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -57,7 +61,18 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.detail_menu_delete -> {
-                delete(taskId)
+                AlertDialog.Builder(this)
+                    .setTitle("削除")
+                    .setMessage("${titleText.text}を削除しますか？")
+                    .setPositiveButton("OK", { dialog, which ->
+                        delete(taskId)
+                    })
+                    .setNegativeButton("Cancel", { dialog, which ->
+                    })
+                    .show()
+            }
+            android.R.id.home -> {
+                finish()
             }
             else -> return super.onOptionsItemSelected(item)
         }

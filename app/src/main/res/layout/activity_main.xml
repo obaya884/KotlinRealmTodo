@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addFloatingActionButton"
         android:layout_width="wrap_content"
@@ -15,10 +14,10 @@
         android:layout_marginBottom="16dp"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="create"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/ic_add_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="#fff" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
