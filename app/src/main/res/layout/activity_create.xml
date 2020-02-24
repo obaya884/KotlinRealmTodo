@@ -31,20 +31,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Title"
+            android:hint="@string/title"
             android:inputType="textPersonName"
-            android:textSize="30sp" />
+            android:textSize="30sp"
+            android:importantForAutofill="no" />
 
         <EditText
             android:id="@+id/contentEditText"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:ems="10"
             android:gravity="top"
-            android:hint="Enter yout TO-DO here!"
+            android:hint="@string/enter_yout_to_do_here"
             android:inputType="textMultiLine"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:importantForAutofill="no" />
 
     </LinearLayout>
 
