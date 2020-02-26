@@ -43,10 +43,10 @@
             android:layout_weight="1"
             android:ems="10"
             android:gravity="top"
-            android:hint="@string/enter_yout_to_do_here"
+            android:hint="@string/enter_your_to_do_here"
+            android:importantForAutofill="no"
             android:inputType="textMultiLine"
-            android:textSize="18sp"
-            android:importantForAutofill="no" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 

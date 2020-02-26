@@ -64,11 +64,11 @@ class DetailActivity : AppCompatActivity() {
                 AlertDialog.Builder(this)
                     .setTitle("削除")
                     .setMessage("${titleText.text}を削除しますか？")
-                    .setPositiveButton("OK", { dialog, which ->
+                    .setPositiveButton("OK") { dialog, which ->
                         delete(taskId)
-                    })
-                    .setNegativeButton("Cancel", { dialog, which ->
-                    })
+                    }
+                    .setNegativeButton("Cancel") { dialog, which ->
+                    }
                     .show()
             }
             android.R.id.home -> {
